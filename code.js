@@ -12,7 +12,7 @@ function updateCurrent() {
 }
 
 function update_list() {
-	$.getJSON( "list.json", function(data) {
+	$.getJSON( "list.json?r="+Math.random(), function(data) {
 		var do_go_last = false;
 		if (current == list.length - 1) do_go_last = true;
 		list = data;
