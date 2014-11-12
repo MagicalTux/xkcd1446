@@ -22,6 +22,9 @@ function update_list(play_sound) {
 		list = data;
 		if ((do_go_last) && (current != list.length - 1)) {
 			go_last();
+			if ((document.hasFocus) && (!document.hasFocus())) {
+				document.title = "[!] xkcd 1446";
+			}
 			if (play_sound)
 				$.playSound('sound');
 		}
@@ -71,3 +74,5 @@ $(document).keydown(function(e) {
 });
 
 update_list(false);
+$(window).focus(function(){document.title = "xkcd 1446";});
+
