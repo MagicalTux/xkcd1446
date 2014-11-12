@@ -30,6 +30,21 @@ function make_list() {
 	sort($list);
 	file_put_contents('list.json~', json_encode($list));
 	rename('list.json~', 'list.json');
+
+	// create static
+	$out = fopen('static.html~', 'w');
+	if (!$out) return; // why?
+	fwrite($out, '<html><head><title>xkcd 1446 - Landing (static)</title></head><body>');
+	fwrite($out, '<h1>xkcd 1446 - Landing (static)</h1>');
+	fwrite($out, '<p>This is a static version containing all the images. You can also <a href="/">see the dynamic version</a>.</p>');
+	fwrite($out, '<p>Source: <a href="http://xkcd.com/1446/">http://xkcd.com/1446/</a></p>');
+	fwrite($out, '<p>xkcd is licensed by <a href="http://www.xkcd.com/about/">Randall Munroe</a> under a <a href="http://www.xkcd.com/license.html">Creative Commons Attribution-NonCommercial 2.5 License</a>, please give credit where it is due (because he\'s a cool guy as far as I can tell from being a regular reader of his comic).</p>');
+	foreach($list as $file) {
+		fwrite($out, '<p><span style="font-family: fixed,monospace;">'.$file.'</span><br/><img src="img/'.$file.'"/></p>');
+	}
+	fwrite($out, '</body></html>');
+	fclose($out);
+	rename('static.html~', 'static.html');
 }
 
 function do_ev($ev) {
