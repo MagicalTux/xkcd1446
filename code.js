@@ -16,9 +16,10 @@ function update_list() {
 		var do_go_last = false;
 		if (current == list.length - 1) do_go_last = true;
 		list = data;
-		if (do_go_last)
+		if (do_go_last){
 			go_last();
-            $.playSound('sound');
+			$.playSound('sound');
+		}
 	});
 	setTimeout(update_list, 30000);
 }
