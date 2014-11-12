@@ -20,7 +20,7 @@ function update_list(play_sound) {
 		var do_go_last = false;
 		if (current == list.length - 1) do_go_last = true;
 		list = data;
-		if (do_go_last){
+		if ((do_go_last) && (current != list.length - 1)) {
 			go_last();
 			if (play_sound)
 				$.playSound('sound');
