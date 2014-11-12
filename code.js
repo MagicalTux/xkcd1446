@@ -20,7 +20,7 @@ function update_list() {
 			go_last();
 	});
 
-	setTimeout(update_list, 30000);
+	setTimeout(update_list, 60000);
 }
 
 function go_prev() {
