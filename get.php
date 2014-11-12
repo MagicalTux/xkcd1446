@@ -16,6 +16,21 @@ stream_set_timeout($sock, 50); // add 5 secs just in case
 
 $ev = ['event' => 'http_response'];
 
+make_list();
+
+function make_list() {
+	$list = [];
+	$dh = opendir('img');
+	if (!$dh) return;
+	while(($f = readdir($dh)) !== false) {
+		if (($f == '.') || ($f == '..')) continue;
+		$list[] = $f;
+	}
+	sort($list);
+	file_put_contents('list.json~', json_encode($list));
+	rename('list.json~', 'list.json');
+}
+
 function do_ev($ev) {
 	var_dump($ev);
 	if ($ev['event'] == 'comic/landing') {
@@ -31,15 +46,7 @@ function do_ev($ev) {
 			fclose($f);
 			rename('img/'.$image.'~', 'img/'.$image);
 			echo "Got image: $image\n";
-			$list = [];
-			$dh = opendir('img');
-			if (!$dh) return;
-			while(($f = readdir($dh)) !== false) {
-				if (($f == '.') || ($f == '..')) continue;
-				$list[] = $f;
-			}
-			sort($list);
-			file_put_contents('list.json', json_encode($list));
+			make_list();
 		}
 		// http://imgs.xkcd.com/comics/landing/$url
 	}
