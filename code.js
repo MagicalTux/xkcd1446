@@ -18,8 +18,8 @@ function update_list() {
 		list = data;
 		if (do_go_last)
 			go_last();
+            $.playSound('sound');
 	});
-
 	setTimeout(update_list, 30000);
 }
 
