@@ -1,9 +1,12 @@
 var list = [];
 var current = -1;
+var preloaders = [];
+
+var max_preload = 10;
 
 // we load list.json which lists all images so far
 
-function updateCurrent() {
+function updateCurrent(preload_forward) {
 	var im = document.getElementById("image");
 	if (current >= 0) {
 		var element = document.getElementById("current_id");
@@ -12,6 +15,22 @@ function updateCurrent() {
 		else
 			element.innerText = current+" ("+list[current]+")";
 		im.src = "img/"+list[current];
+	}
+
+	preloaders = [];
+	var i;
+
+	for (i = 1 ; i <= max_preload ; i++) {
+		var preload_idx = preload_forward ? (current + i) : (current - i);
+		var preload = list[preload_idx];
+
+		if (!preload) {
+			break;
+		}
+
+		var image = new Image();
+		image.src = "img/" + preload;
+		preloaders.push(image);
 	}
 }
 
@@ -35,23 +54,23 @@ function update_list(play_sound) {
 function go_prev() {
 	if (current <= 0) return;
 	current--;
-	updateCurrent();
+	updateCurrent(false);
 }
 
 function go_next() {
 	if (current >= (list.length-1)) return;
 	current++;
-	updateCurrent();
+	updateCurrent(true);
 }
 
 function go_first() {
 	current = 0;
-	updateCurrent();
+	updateCurrent(true);
 }
 
 function go_last() {
 	current = list.length-1;
-	updateCurrent();
+	updateCurrent(false);
 }
 
 $(document).keydown(function(e) {
