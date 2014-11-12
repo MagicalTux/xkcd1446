@@ -58,7 +58,8 @@ function update_list(play_sound,first_run) {
 				$.playSound('sound');
 		}
 	});
-	setTimeout(function() { update_list(true,false); }, 60000);
+	// Disable auto loading since it's over now
+//	setTimeout(function() { update_list(true,false); }, 60000);
 }
 
 function go_to(frame) {
