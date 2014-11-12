@@ -6,7 +6,11 @@ var current = -1;
 function updateCurrent() {
 	var im = document.getElementById("image");
 	if (current >= 0) {
-		document.getElementById("current_id").innerText = current+" ("+list[current]+")";
+		var element = document.getElementById("current_id");
+		if (element.textContent != undefined)
+			element.textContent = current+" ("+list[current]+")";
+		else
+			element.innerText = current+" ("+list[current]+")";
 		im.src = "img/"+list[current];
 	}
 }
