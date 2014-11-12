@@ -1,4 +1,4 @@
-# xkcd 1446 - ???
+# xkcd 1446 - Landing
 
 Small script to download and display images from http://xkcd.com/1446/
 
