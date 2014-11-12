@@ -24,6 +24,7 @@ function make_list() {
 	if (!$dh) return;
 	while(($f = readdir($dh)) !== false) {
 		if (($f == '.') || ($f == '..')) continue;
+		if ($f == '.keep') continue;
 		$list[] = $f;
 	}
 	sort($list);
