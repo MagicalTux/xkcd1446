@@ -25,6 +25,7 @@ function make_list() {
 	while(($f = readdir($dh)) !== false) {
 		if (($f == '.') || ($f == '..')) continue;
 		if ($f == '.keep') continue;
+		if (substr($f, -1) == '~') continue; // skip tmp files
 		$list[] = $f;
 	}
 	sort($list);
