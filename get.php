@@ -5,7 +5,7 @@ $url = 'http://c'.$rand.'.xkcd.com/stream/comic/landing?method=EventSource';
 
 $url = parse_url($url);
 
-$sock = fsockopen($url['host'], 80);
+$sock = fsockopen($url['host'], 80, $errno, $errstr, 180);
 if (!$sock) die("failed to connect\n");
 
 fwrite($sock, 'GET '.$url['path'].'?'.$url['query'].' HTTP/1.0'."\r\n");
