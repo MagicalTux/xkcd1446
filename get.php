@@ -1,5 +1,7 @@
 <?php
 
+make_list();
+
 $rand = mt_rand(0,7);
 $url = 'http://c'.$rand.'.xkcd.com/stream/comic/landing?method=EventSource';
 
@@ -15,8 +17,6 @@ fwrite($sock, "User-Agent: MagicalTux (compatible; yeah right; http://xkcd1446.o
 stream_set_timeout($sock, 50); // add 5 secs just in case
 
 $ev = ['event' => 'http_response'];
-
-make_list();
 
 function make_list() {
 	$list = [];
