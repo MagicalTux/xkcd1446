@@ -7,6 +7,7 @@ var max_preload = 10;
 // we load list.json which lists all images so far
 
 function updateCurrent(preload_forward) {
+	$.History.setHash(""+current);
 	var im = document.getElementById("image");
 	if (current >= 0) {
 		var element = document.getElementById("current_id");
@@ -35,11 +36,19 @@ function updateCurrent(preload_forward) {
 	preloaders = new_preloaders;
 }
 
-function update_list(play_sound) {
+function update_list(play_sound,first_run) {
 	$.getJSON( "list.json?r="+Math.random(), function(data) {
 		var do_go_last = false;
 		if (current == list.length - 1) do_go_last = true;
 		list = data;
+		if (first_run) {
+			var pos = $.History.getHash();
+			var pos_int = pos || 0;
+			if ((pos_int) || (pos == '0')) {
+				go_to(pos_int);
+				return;
+			}
+		}
 		if ((do_go_last) && (current != list.length - 1)) {
 			go_last();
 			if ((document.hasFocus) && (!document.hasFocus())) {
@@ -49,7 +58,16 @@ function update_list(play_sound) {
 				$.playSound('sound');
 		}
 	});
-	setTimeout(function() { update_list(true); }, 60000);
+	setTimeout(function() { update_list(true,false); }, 60000);
+}
+
+function go_to(frame) {
+	frame = frame || 0;
+	if (frame == current) return;
+	if (frame < 0) return;
+	if (frame > (list.length-1)) return;
+	current = frame;
+	updateCurrent(true); // assume direction will be forward
 }
 
 function go_prev() {
@@ -93,6 +111,7 @@ $(document).keydown(function(e) {
 	e.preventDefault();
 });
 
-update_list(false);
+update_list(false,true);
+$.History.bind(go_to);
 $(window).focus(function(){document.title = "xkcd 1446";});
 
