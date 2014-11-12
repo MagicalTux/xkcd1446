@@ -11,6 +11,9 @@ if (!$sock) die("failed to connect\n");
 fwrite($sock, 'GET '.$url['path'].'?'.$url['query'].' HTTP/1.0'."\r\n");
 fwrite($sock, "User-Agent: MagicalTux (compatible; yeah right; http://xkcd1446.org/)\r\n\r\n");
 
+// heartbeat timeout is 45 secs in http://xkcd.com/s/bb3cbd.js
+stream_set_timeout($sock, 50); // add 5 secs just in case
+
 $ev = ['event' => 'http_response'];
 
 function do_ev($ev) {
