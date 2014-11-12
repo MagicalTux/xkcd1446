@@ -15,17 +15,18 @@ function updateCurrent() {
 	}
 }
 
-function update_list() {
+function update_list(play_sound) {
 	$.getJSON( "list.json?r="+Math.random(), function(data) {
 		var do_go_last = false;
 		if (current == list.length - 1) do_go_last = true;
 		list = data;
 		if (do_go_last){
 			go_last();
-			$.playSound('sound');
+			if (play_sound)
+				$.playSound('sound');
 		}
 	});
-	setTimeout(update_list, 60000);
+	setTimeout(function() { update_list(true); }, 60000);
 }
 
 function go_prev() {
@@ -50,4 +51,4 @@ function go_last() {
 	updateCurrent();
 }
 
-update_list();
+update_list(false);
