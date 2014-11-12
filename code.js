@@ -12,14 +12,26 @@ function updateCurrent() {
 		else
 			element.innerText = current+" ("+list[current]+")";
 		im.src = "img/"+list[current];
+		window.location.hash = ""+current;
 	}
 }
 
 function update_list(play_sound) {
-	$.getJSON( "list.json?r="+Math.random(), function(data) {
+	var deferred = $.getJSON( "list.json?r="+Math.random(), function(data) {
 		var do_go_last = false;
-		if (current == list.length - 1) do_go_last = true;
+
+		if (list.length > 0 && current >= list.length - 1) {
+			do_go_last = true;
+		}
+
 		list = data;
+
+		if (current >= list.length - 1) {
+			do_go_last = true;
+		} else if (current < 0) {
+			do_go_last = true;
+		}
+
 		if ((do_go_last) && (current != list.length - 1)) {
 			go_last();
 			if ((document.hasFocus) && (!document.hasFocus())) {
@@ -30,6 +42,7 @@ function update_list(play_sound) {
 		}
 	});
 	setTimeout(function() { update_list(true); }, 60000);
+	return deferred;
 }
 
 function go_prev() {
@@ -73,6 +86,12 @@ $(document).keydown(function(e) {
 	e.preventDefault();
 });
 
-update_list(false);
-$(window).focus(function(){document.title = "xkcd 1446";});
+if (window.location.hash) {
+	current = parseInt(window.location.hash.substr(1), 10);
+	if (current < 0 || isNaN(current) ) {
+		current = -1;
+	}
+}
 
+update_list(false).then(updateCurrent);
+$(window).focus(function(){document.title = "xkcd 1446";});
