@@ -17,7 +17,7 @@ function updateCurrent(preload_forward) {
 		im.src = "img/"+list[current];
 	}
 
-	preloaders = [];
+	var new_preloaders = [];
 	var i;
 
 	for (i = 1 ; i <= max_preload ; i++) {
@@ -30,8 +30,9 @@ function updateCurrent(preload_forward) {
 
 		var image = new Image();
 		image.src = "img/" + preload;
-		preloaders.push(image);
+		new_preloaders.push(image);
 	}
+	preloaders = new_preloaders;
 }
 
 function update_list(play_sound) {
