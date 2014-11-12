@@ -51,4 +51,23 @@ function go_last() {
 	updateCurrent();
 }
 
+$(document).keydown(function(e) {
+	switch(e.which) {
+		case 37: // left
+			go_prev();
+			break;
+		case 38: // up
+			go_first();
+			break;
+		case 39: // right
+			go_next();
+			break;
+		case 40: // down
+			go_last();
+			break;
+		default: return;
+	}
+	e.preventDefault();
+});
+
 update_list(false);
