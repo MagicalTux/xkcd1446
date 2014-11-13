@@ -1,10 +1,12 @@
 # xkcd 1446 - Landing
 
+![GIF](https://raw.githubusercontent.com/ke7ofi/xkcd1446/master/img/GIFs/1hz.gif)
+
 Small script to download and display images from http://xkcd.com/1446/
 
 This is live on URL: http://xkcd1446.org/
 
-GIFs are available [here](img/GIF).
+GIFs (Most of them, fortunately, are slower than the one above.) are available [here](https://github.com/ke7ofi/xkcd1446/tree/master/img/GIFs).
 
 # TODO
 
