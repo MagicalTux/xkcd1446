@@ -42,6 +42,7 @@ a {
 }
 
 .controls a, #current_id {
+	display: inline-block;
 	background-color: #6E7B91;
 	color: #FFF;
 	border: 1.5px solid #333;
@@ -57,6 +58,9 @@ a {
 	-moz-box-shadow: 0 0 5px 0 gray;
 	-webkit-box-shadow: 0 0 5px 0 gray;
 }
+#current_id {
+	line-height: 1.5em;
+}
 
 .controls a:hover, #current_id {
 	background-color: #FFF;
@@ -70,4 +74,20 @@ a {
 	max-width: 850px;
 	margin: auto;
 	font-size: 0.8em;
+}
+
+@media (max-width: 800px) {
+	body {
+		left: 0;
+		margin-left: 0;
+		width: 100%;
+	}
+	.box {
+		border-radius: 0;
+		border-width: 1.5px 0;
+	}
+	img {
+		width: calc(100% - 24px);
+		max-width: 634px;
+	}
 }
