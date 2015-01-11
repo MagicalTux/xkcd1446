@@ -1,6 +1,7 @@
 <?php
 
 make_list();
+exit;
 
 $rand = mt_rand(0,7);
 $url = 'http://c'.$rand.'.xkcd.com/stream/comic/landing?method=EventSource';
@@ -25,10 +26,12 @@ function make_list() {
 	while(($f = readdir($dh)) !== false) {
 		if (($f == '.') || ($f == '..')) continue;
 		if ($f == '.keep') continue;
+		if ($f == 'GIFs') continue;
 		if (substr($f, -1) == '~') continue; // skip tmp files
 		$list[] = $f;
 	}
-	sort($list);
+	natsort($list);
+	$list = array_values($list); // drop keys that natsort() kept
 	file_put_contents('list.json~', json_encode($list));
 	rename('list.json~', 'list.json');
 
@@ -40,10 +43,11 @@ function make_list() {
 	fwrite($out, '<p>This is a static version containing all the images. You can also <a href="/">see the dynamic version</a>.</p>');
 	fwrite($out, '<p>Source: <a href="http://xkcd.com/1446/">http://xkcd.com/1446/</a></p>');
 	fwrite($out, '<p>xkcd is licensed by <a href="http://www.xkcd.com/about/">Randall Munroe</a> under a <a href="http://www.xkcd.com/license.html">Creative Commons Attribution-NonCommercial 2.5 License</a>, please give credit where it is due (because he\'s a cool guy as far as I can tell from being a regular reader of his comic).</p>');
+	fwrite($out, "\n\n");
 	foreach($list as $file) {
-		fwrite($out, '<p><span style="font-family: fixed,monospace;">'.$file.'</span><br/><img src="img/'.$file.'"/></p>');
+		fwrite($out, '<p><span style="font-family: fixed,monospace;">'.$file.'</span><br/><img src="img/'.$file.'"/></p>'."\n");
 	}
-	fwrite($out, '</body></html>');
+	fwrite($out, "\n".'</body></html>');
 	fclose($out);
 	rename('static.html~', 'static.html');
 }
